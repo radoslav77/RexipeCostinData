@@ -21,8 +21,14 @@
 </style>
 
 <body>
-    <h1> My prject</h1>
-    <a href="{% url 'upload_file' %}">To upload SCV file</a>
+    <h1> upload</h1>
+
+    <form action="{% url 'upload_file' %}" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <input type="file" name="file_input" id="">
+        <input type="submit" name="submit" value="Submit" id="">
+    </form>
     <div class="card">
         <div class="card-body">
             <div class="recipe">
