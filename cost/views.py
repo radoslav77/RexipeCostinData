@@ -2,6 +2,7 @@ from django.shortcuts import render
 import csv
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from pathlib import Path
 
 from .models import Exeldocument
 from django.views.generic.edit import FormView
@@ -10,6 +11,29 @@ from .forms import FileFieldForm
 
 
 def index(request):
+    files = Exeldocument.objects.filter(title='ritter')
+    csv_files = []
+
+    for file in files:
+        csv_files.append(file)
+    # print(csv_files)
+    for ex in csv_files:
+        excel_sheet = ex.doc
+        print(ex.doc)
+        path = Path(ex.doc)
+        with open(path, newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                print(row['first_name'], row['last_name'])
+        for d in excel_sheet:
+            # print(d)
+            '''
+            with open(d, newline='') as csvfile:
+                spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+                for row in spamreader:
+                    print(row['Description'], row['Unit Size'])
+                  # print(', '.join(row))
+                  '''
     return render(request, 'cost/index.html')
 
 
@@ -30,14 +54,14 @@ def some_view_api(request):
 
 def upload_file(request):
     if request.method == 'POST':
-
         form = FileFieldForm(request.POST, request.FILES)
-
         if form.is_valid():
-            # file is saved
-            print(form)
-            form.save()
-            return HttpResponseRedirect('/success/url/')
+            data = form.save(commit=False)
+            data.save()
+
+            # Get the current instance object to display in the template
+            img_obj = form.instance
+            return render(request, 'cost/upload.html', {'form': form, 'img_obj': img_obj})
     else:
         form = FileFieldForm()
     return render(request, 'cost/upload.html', {'form': form})

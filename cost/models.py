@@ -14,4 +14,8 @@ class Import_Data(models.Model):
 
 
 class Exeldocument(models.Model):
-    doc = models.FileField()
+    title = models.CharField(max_length=200)
+    doc = models.FileField(upload_to='media')
+
+    def __str__(self):
+        return self.title

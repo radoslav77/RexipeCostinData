@@ -7,5 +7,5 @@ from .models import *
 class FileFieldForm(forms.ModelForm):
     class Meta:
         model = Exeldocument
-        fields = ('doc',)
+        fields = ('title', 'doc')
     #file_field = forms.FileField()

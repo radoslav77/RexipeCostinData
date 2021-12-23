@@ -13,7 +13,7 @@ admin.site.register(Import_Data, Import_DataAdmin)
 
 
 class ExeldocumentAdmin(admin.ModelAdmin):
-    list_display = ("doc",)
+    list_display = ("title", "doc")
 
 
 admin.site.register(Exeldocument, ExeldocumentAdmin)
