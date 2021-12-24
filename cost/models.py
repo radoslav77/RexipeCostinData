@@ -6,11 +6,12 @@ from django.db import models
 class Import_Data(models.Model):
     name = models.CharField(max_length=200)
     unit = models.CharField(max_length=50)
-    price = models.IntegerField()
+    unit_type = models.CharField(max_length=50, default='g')
+    price = models.FloatField()
     company = models.CharField(max_length=200)
 
     def __str__(self):
-        return f'{self.name}, {self.unit}, {self.price}'
+        return f'{self.name}, {self.unit}, {self.price}, {self.company}'
 
 
 class Exeldocument(models.Model):

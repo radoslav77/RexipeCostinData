@@ -6,7 +6,7 @@ from .models import *
 
 
 class Import_DataAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "price", "company")
+    list_display = ("id", "name", "unit", "unit_type", "price", "company")
 
 
 admin.site.register(Import_Data, Import_DataAdmin)

@@ -2,14 +2,14 @@ from django.shortcuts import render
 import csv
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-import pandas as pd
+
 from csv import DictReader
 import sys
 import pprint
 import os
 from django.conf import settings
 
-from .models import Exeldocument
+from .models import Exeldocument, Import_Data
 from django.views.generic.edit import FormView
 from .forms import FileFieldForm
 
@@ -24,42 +24,40 @@ def index(request):
     files = Exeldocument.objects.filter(title='ritter')
     csv_files = []
     field_names = []
-    #new_path = settings.MEDIA_ROOT + file
+    dic_data = {}
+    # new_path = settings.MEDIA_ROOT + file
 
     # print(new_path)
     def csv_dict_list(variables_file):
         new_try = csv.DictReader(open(
-            'C:/Users/home/Desktop/django projects/Costing/RecipeCosting/media/media/SupplierPriceListExport_1009451_12-23-202117-09-42.csv', newline=''))
+            'C:/Users/home/Desktop/django projects/Costing/RecipeCosting/media/media/SupplierPriceListExport_1009453_12-23-202117-11-48.csv', newline=''))
         dict_list = []
         for line in new_try:
             dict_list.append(line)
         return dict_list
 
     device_values = csv_dict_list(sys.argv[1])
-    pprint.pprint(device_values)
-    '''
-        spamreader = csv.reader(f, delimiter=' ', quotechar='|')
-        reader = csv.DictReader(f)
-        order_dict_list = list(reader)[0]
-        dict_csv = dict(order_dict_list)
-        csv_files.append(dict_csv)
-        print(dict_csv)
-        # for row in spamreader:
-        # csv_files.append(row)
-        #dict_from_csv = {rows[0]: rows[1] for rows in spamreader}
-        # print(dict_from_csv)
-        '''
-    # open file in read mode
-    with open('C:/Users/home/Desktop/django projects/Costing/RecipeCosting/media/media/SupplierPriceListExport_1009451_12-23-202117-09-42.csv', 'r') as read_obj:
-        # pass the file object to DictReader() to get the DictReader object
-        csv_dict_reader = DictReader(read_obj)
-    # get column names from a csv file
-        column_names = csv_dict_reader.fieldnames
-        # field_names.append(column_names)
-        # print(column_names)
+    # pprint.pprint(device_values)
+    csv_files.append(device_values)
+    unit_type = []
 
-    # for line in csv_files:
-        # print(line)
+    for line in device_values:
+        dic_data.update(line)
+        for field in line:
+            #c = line[field]
+            name = []
+            unit = []
+
+            price = []
+            unit_type.append({
+                'Title': line['Description'],
+                'Unit': line['Unit Size'],
+                'Price': line['Price']
+            })
+        # data = Import_Data(name=line['Description'], unit=line['Unit Size'], unit_type=line['Unit Measure'],
+        #                   price=line['Price'], company='Solstis')
+        # print(data)
+        # data.save()
 
     return render(request, 'cost/index.html', {
         'csv': files,
