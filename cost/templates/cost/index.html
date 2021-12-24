@@ -26,10 +26,14 @@
     <div class="card">
         <div class="card-body">
             <div class="recipe">
-
+                <a href="media\{{csv.doc}}">{{csv.doc}}</a>
             </div>
             <div class="total">
-
+                <ul>
+                    {% for row in rows %}
+                    <li>{{row}}</li>
+                    {% endfor %}
+                </ul>
             </div>
             <div class="method">
 
