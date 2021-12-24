@@ -20,3 +20,12 @@ class Exeldocument(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Recipe(models.Model):
+    title = models.CharField(max_length=200)
+    recipe = models.TextField(max_length=2000)
+    method = models.TextField(max_length=2000)
+
+    def __str__(self):
+        return f'{self.title}'

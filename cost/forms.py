@@ -9,3 +9,9 @@ class FileFieldForm(forms.ModelForm):
         model = Exeldocument
         fields = ('title', 'doc')
     #file_field = forms.FileField()
+
+
+class RecipeForm(forms.ModelForm):
+    class Meta:
+        model = Recipe
+        fields = ('title', 'recipe', 'method')

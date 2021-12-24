@@ -1,17 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import csv
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-
+import json
 from csv import DictReader
 import sys
 import pprint
 import os
 from django.conf import settings
 
-from .models import Exeldocument, Import_Data
+from .models import Exeldocument, Import_Data, Recipe
 from django.views.generic.edit import FormView
-from .forms import FileFieldForm
+from .forms import FileFieldForm, RecipeForm
 
 # Create your views here.
 
@@ -93,6 +93,65 @@ def upload_file(request):
     else:
         form = FileFieldForm()
     return render(request, 'cost/upload.html', {'form': form})
+
+
+def recipe_upload(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES)
+        print(form)
+        if form.is_valid:
+            data = form.save(commit=False)
+            data.save()
+
+            return redirect('index')
+
+    return render(request, 'cost/recipe-upload.html', {
+        'form': RecipeForm()
+    })
+
+
+def recipe(request):
+    recipe_data = Recipe.objects.all()
+    title = []
+    method = []
+    for ing in recipe_data:
+
+        title.append(ing.title)
+        method.append(ing.method)
+    # print(ingr_lines)
+
+    ing = []
+    ingr = []
+    for i in recipe_data:
+        ingr = i.recipe.split(',')
+        ing.append(ingr[0:-1])
+
+        for j in ing:
+            i = j[0][0]
+            ingr.append(i[0:-1])
+
+    return render(request, 'cost/recipe.html', {
+        'ing': ingr,
+        'method': method[0],
+        'title': title[0]
+    })
+
+
+# API data
+
+def api_data_cost(request):
+    data = Import_Data.objects.all()
+    dic_data = []
+    for d in data:
+        dic_data.append({
+            'Name': d.name,
+            'Unit': d.unit,
+            'Type': d.unit_type,
+            'Price': d.price,
+            'Company': d.company
+        })
+
+    return HttpResponse(json.dumps(dic_data), content_type="application/json")
 
 
 class FileFieldFormView(FormView):

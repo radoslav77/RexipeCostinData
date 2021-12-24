@@ -17,3 +17,10 @@ class ExeldocumentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Exeldocument, ExeldocumentAdmin)
+
+
+class RecipeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'recipe', 'method')
+
+
+admin.site.register(Recipe, RecipeAdmin)

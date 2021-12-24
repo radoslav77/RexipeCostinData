@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />-->
+    <link rel="stylesheet" href="style.css">
+    <title>Password Generator</title>
+</head>
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border: 1px solid #000;
+        width: 80%;
+        height: 60%;
+    }
+</style>
+
+<body>
+    <h1> upload</h1>
+
+    <form action="{% url 'recipe_upload' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" name="submit" value="Submit" id="">
+    </form>
+
+    {% if img_obj %}
+    <h3>Succesfully uploaded : {{img_obj.title}}</h3>
+    <img src="{{ img_obj.doc.url}}" alt="connect" style="max-height:300px">
+    <a href="{{ img_obj.doc.url}}">{{img_obj.title}}</a>
+    {% endif %}
+
+    <div class="card">
+        <div class="card-body">
+            <div class="recipe">
+
+            </div>
+            <div class="total">
+
+            </div>
+            <div class="method">
+
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
