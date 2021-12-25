@@ -72,6 +72,8 @@
 
     }
 
+    var ingr_cost = new Set()
+
     async function getData(url) {
         const res = await fetch(url)
         const data = await res.json()
@@ -81,10 +83,22 @@
                 e.forEach(element => {
                     var new_d = d.Name.split(' ')
                     //console.log(new_d[0])
-                    if (element.toLowerCase() == new_d[0].toLowerCase()) {
+                    var newName = e[2] + ' ' + e[3]
+                    var newPro = new_d[0] + ' ' + new_d[2]
+                    //console.log(e[2] + ' ' + e[3])
+                    if (newName.toLowerCase() == d.Name.toLowerCase()) {
                         console.log(d)
+                        ingr_cost.add(d)
+                        ingr_cost.forEach(item => {
+                            if (item.Name == 'Caster Sugar' && item.Unit != 25.000) {
+                                ingr_cost.delete(item)
+                            }
+                        })
+                        // need to get the right product 
+                        // create the math function
+                        // calculate the cost per recipe
                     }
-                    // console.log(element)
+
                 })
 
             })
@@ -92,7 +106,7 @@
     }
 
 
-    console.log(arrStr)
+    console.log(ingr_cost)
 </script>
 
 </html>
