@@ -63,38 +63,42 @@
     const URL_DATA = ('/api_data_cost')
     getData(URL_DATA)
     const recipeEl = document.getElementById('con').children
-    console.log(recipeEl)
+    //console.log(recipeEl)
     var arrStr = []
+    var recConatiner = []
     for (let i = 0; i < recipeEl.length; i++) {
         var LineText = recipeEl[i].innerHTML
         var t = LineText.split(' ')
         arrStr.push(t)
+        recConatiner.push(LineText)
 
     }
 
     var ingr_cost = new Set()
-
+    var totalCost = new Set()
+    TotalCalc(ingr_cost, arrStr)
     async function getData(url) {
         const res = await fetch(url)
         const data = await res.json()
-        console.log(data)
-        arrStr.forEach(e => {
+        //console.log(data)
+        arrStr.forEach((e, idx) => {
             data.forEach(d => {
                 e.forEach(element => {
                     var new_d = d.Name.split(' ')
-                    //console.log(new_d[0])
+                    //console.log(e[0])
                     var newName = e[2] + ' ' + e[3]
                     var newPro = new_d[0] + ' ' + new_d[2]
                     //console.log(e[2] + ' ' + e[3])
                     if (newName.toLowerCase() == d.Name.toLowerCase()) {
-                        console.log(d)
+                        //console.log(d.Unit * 1000)
                         ingr_cost.add(d)
                         ingr_cost.forEach(item => {
                             if (item.Name == 'Caster Sugar' && item.Unit != 25.000) {
                                 ingr_cost.delete(item)
                             }
                         })
-                        // need to get the right product 
+
+                        // need to get the right amount 
                         // create the math function
                         // calculate the cost per recipe
                     }
@@ -102,11 +106,41 @@
                 })
 
             })
+
+
+
+            //console.log(e, '-', idx)
+            //console.log(recNew)
+
+
         })
     }
 
 
-    console.log(ingr_cost)
+
+    function TotalCalc(arr1, arr2) {
+        arr1.forEach(ing => {
+            arr2.forEach(e => {
+                var c = ing.Unit * 1000
+                var a = ing.Price / c
+                var b = e[0] * a
+                totalCost.add(ing, b)
+
+            })
+            console.log(totalCost)
+        })
+    }
+
+
+    var recNew = new Set()
+    recConatiner.forEach((line, idx) => {
+        var newLines = line.split(/\s+/)
+        //console.log(newLines, '-', idx)
+        recNew.add(newLines, idx)
+    })
+
+
+    //console.log(recNew)
 </script>
 
 </html>
