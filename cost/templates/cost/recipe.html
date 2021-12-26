@@ -76,7 +76,7 @@
 
     var ingr_cost = new Set()
     var totalCost = new Set()
-    TotalCalc(ingr_cost, arrStr)
+
     async function getData(url) {
         const res = await fetch(url)
         const data = await res.json()
@@ -114,21 +114,37 @@
 
 
         })
-    }
+        let counter = 0
+        ingr_cost.forEach(ing => {
+            //console.log(ing)
+            arrStr.forEach((e, idx) => {
+                if (idx < arrStr.length) {
+                    //console.log(idx)
+                    counter++
+                    var c = ing.Unit * 1000
+                    var a = ing.Price / c
+                    var b = e[0] * a
+                    totalCost.add(b)
 
+                }
 
-
-    function TotalCalc(arr1, arr2) {
-        arr1.forEach(ing => {
-            arr2.forEach(e => {
-                var c = ing.Unit * 1000
-                var a = ing.Price / c
-                var b = e[0] * a
-                totalCost.add(ing, b)
 
             })
-            console.log(totalCost)
+
         })
+    }
+    let temp = 0
+    let total = 0
+    totalCost.forEach(p => {
+        totol = p + temp
+        console.log(p)
+    })
+
+
+    console.log(totalCost)
+    TotalCalc(ingr_cost, arrStr)
+    async function TotalCalc(arr1, arr2) {
+
     }
 
 
