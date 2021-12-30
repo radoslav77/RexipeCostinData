@@ -45,6 +45,7 @@
             <div class="method">
 
             </div>
+            <p id="price"></p>
         </div>
     </div>
     <div class="con">
@@ -60,22 +61,29 @@
     <script src="script.js"></script>
 </body>
 <script>
+    const priceElement = document.getElementById('price')
     const URL_DATA = ('/api_data_cost')
     getData(URL_DATA)
     const recipeEl = document.getElementById('con').children
     //console.log(recipeEl)
-    var arrStr = []
+    var arrStr = new Set()
+    var arrStr1 = new Set()
     var recConatiner = []
+    var ingr_cost = new Set()
+    var ingr_cost1 = new Set()
+    var totalCost = new Set()
+    let q = []
+
     for (let i = 0; i < recipeEl.length; i++) {
         var LineText = recipeEl[i].innerHTML
         var t = LineText.split(' ')
-        arrStr.push(t)
+        arrStr.add(t)
+        arrStr1.add(Number(t[0]))
         recConatiner.push(LineText)
 
     }
 
-    var ingr_cost = new Set()
-    var totalCost = new Set()
+
 
     async function getData(url) {
         const res = await fetch(url)
@@ -116,32 +124,66 @@
         })
         let counter = 0
         ingr_cost.forEach(ing => {
-            //console.log(ing)
-            arrStr.forEach((e, idx) => {
-                if (idx < arrStr.length) {
-                    //console.log(idx)
-                    counter++
-                    var c = ing.Unit * 1000
-                    var a = ing.Price / c
-                    var b = e[0] * a
-                    totalCost.add(b)
 
-                }
+            counter++
+
+            //console.log(counter)
+
+
+            arrStr.forEach((e, idx) => {
+
+                //console.log(idx)
+
+                var c = ing.Unit * 1000
+                var a = ing.Price / c
+                ingr_cost1.add(a)
+                var b = (e[0]) * a
+                arrStr1.add(e[0])
+                totalCost.add(e[0], '-', a)
+
 
 
             })
 
+
+
         })
+
+        console.log(ingr_cost1)
+        console.log(arrStr1)
+        let idx = 0
+        totalCost1 = 0
+        ingr_cost1.forEach(price => {
+
+
+            arrStr1.forEach(item => {
+                idx++
+                if (idx > 5) {
+                    return
+                }
+                let b = item * price
+                let t = totalCost1 + b
+                q.push(t)
+
+            })
+
+        })
+        console.log(q.reduce((a, b) => a + b))
+        priceElement.innerHTML = `£  ${q.reduce((a, b) => a + b)} per recipe`
     }
+
+
+
+    console.log(q)
     let temp = 0
     let total = 0
     totalCost.forEach(p => {
         totol = p + temp
-        console.log(p)
+        //console.log(p)
     })
 
 
-    console.log(totalCost)
+    //console.log(totalCost)
     TotalCalc(ingr_cost, arrStr)
     async function TotalCalc(arr1, arr2) {
 
@@ -156,7 +198,10 @@
     })
 
 
-    //console.log(recNew)
+    //console.log(arrStr1)
+    //console.log(ingr_cost1.length)
+
+
 </script>
 
 </html>
