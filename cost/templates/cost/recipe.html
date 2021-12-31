@@ -46,6 +46,7 @@
 
             </div>
             <p id="price"></p>
+            <p id="perpice"></p>
         </div>
     </div>
     <div class="con">
@@ -62,6 +63,7 @@
 </body>
 <script>
     const priceElement = document.getElementById('price')
+    const portionElement = document.getElementById('perpice')
     const URL_DATA = ('/api_data_cost')
     getData(URL_DATA)
     const recipeEl = document.getElementById('con').children
@@ -170,6 +172,7 @@
         })
         console.log(q.reduce((a, b) => a + b))
         priceElement.innerHTML = `£  ${q.reduce((a, b) => a + b)} per recipe`
+        portionElement.innerHTML = `£  ${q.reduce((a, b) => a + b) / 10}  per portion`
     }
 
 
