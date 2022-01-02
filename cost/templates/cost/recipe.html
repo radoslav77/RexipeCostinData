@@ -92,11 +92,14 @@
         const data = await res.json()
         //console.log(data)
         arrStr.forEach((e, idx) => {
+            //console.log(e)
             data.forEach(d => {
+                //console.log(d)
                 e.forEach(element => {
                     var new_d = d.Name.split(' ')
-                    //console.log(e[0])
+                    //console.log(e[2])
                     var newName = e[2] + ' ' + e[3]
+                    var newName1 = e[2]
                     var newPro = new_d[0] + ' ' + new_d[2]
                     //console.log(e[2] + ' ' + e[3])
                     if (newName.toLowerCase() == d.Name.toLowerCase()) {
@@ -129,7 +132,7 @@
 
             counter++
 
-            //console.log(counter)
+            //console.log(ing)
 
 
             arrStr.forEach((e, idx) => {
@@ -154,13 +157,14 @@
         console.log(ingr_cost1)
         console.log(arrStr1)
         let idx = 0
+        let count = 0
         totalCost1 = 0
         ingr_cost1.forEach(price => {
 
-
+            count++
             arrStr1.forEach(item => {
                 idx++
-                if (idx > 5) {
+                if (idx > count) {
                     return
                 }
                 let b = item * price
