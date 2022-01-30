@@ -129,7 +129,16 @@ def recipe(request):
         for j in ing:
             i = j[0][0]
             ingr.append(i[0:-1])
+    data = Import_Data.objects.all()
+    e = []
+    for i in ingr:
 
+        for d in data:
+            if d.name in i:
+                print(d)
+
+    # print(data)
+    print(ingr[0])
     return render(request, 'cost/recipe.html', {
         'ing': ingr,
         'method': method[0],
