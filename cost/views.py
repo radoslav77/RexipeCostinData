@@ -135,7 +135,10 @@ def recipe(request):
 
         for d in data:
             if d.name in i:
-                print(d)
+                a = []
+                a.append(i)
+
+                # print(a)
 
     # print(data)
     print(ingr[0])

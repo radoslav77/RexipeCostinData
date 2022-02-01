@@ -69,7 +69,7 @@
     const recipeEl = document.getElementById('con').children
     //console.log(recipeEl)
     var arrStr = new Set()
-    var arrStr1 = new Set()
+    var arrStr1 = []
     var recConatiner = []
     var ingr_cost = new Set()
     var ingr_cost1 = new Set()
@@ -80,12 +80,16 @@
         var LineText = recipeEl[i].innerHTML
         var t = LineText.split(' ')
         arrStr.add(t)
-        arrStr1.add(Number(t[0]))
+
         recConatiner.push(LineText)
 
+
     }
+    arrStr.forEach(item => {
+        arrStr1.push(Number(item[0]))
+    })
 
-
+    //console.log(t[0])
 
     async function getData(url) {
         const res = await fetch(url)
@@ -124,7 +128,7 @@
 
             //console.log(e, '-', idx)
             //console.log(recNew)
-
+            console.log(arrStr1)
 
         })
         let counter = 0
@@ -143,7 +147,7 @@
                 var a = ing.Price / c
                 ingr_cost1.add(a)
                 var b = (e[0]) * a
-                arrStr1.add(e[0])
+                arrStr1.push(e[0])
                 totalCost.add(e[0], '-', a)
 
 
@@ -154,8 +158,8 @@
 
         })
 
-        console.log(ingr_cost1)
-        console.log(arrStr1)
+        //console.log(ingr_cost1)
+        //console.log(arrStr1)
         let idx = 0
         let count = 0
         totalCost1 = 0
@@ -163,6 +167,7 @@
 
             count++
             arrStr1.forEach(item => {
+
                 idx++
                 if (idx > count) {
                     return
@@ -174,7 +179,7 @@
             })
 
         })
-        console.log(q.reduce((a, b) => a + b))
+        //console.log(q.reduce((a, b) => a + b))
         priceElement.innerHTML = `£  ${q.reduce((a, b) => a + b)} per recipe`
         portionElement.innerHTML = `£  ${q.reduce((a, b) => a + b) / 10}  per portion`
     }
