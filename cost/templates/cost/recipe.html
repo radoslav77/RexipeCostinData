@@ -99,35 +99,35 @@
             //console.log(e)
             data.forEach(d => {
                 //console.log(d)
-                e.forEach(element => {
-                    var new_d = d.Name.split(' ')
-                    //console.log(e[2])
-                    var newName = e[2] + ' ' + e[3]
-                    var newName1 = e[2]
-                    var newPro = new_d[0] + ' ' + new_d[2]
-                    //console.log(e[2] + ' ' + e[3])
-                    if (newName.toLowerCase() == d.Name.toLowerCase()) {
-                        //console.log(d.Unit * 1000)
-                        ingr_cost.add(d)
-                        ingr_cost.forEach(item => {
-                            if (item.Name == 'Caster Sugar' && item.Unit != 25.000) {
-                                ingr_cost.delete(item)
-                            }
-                        })
 
-                        // need to get the right amount 
-                        // create the math function
-                        // calculate the cost per recipe
-                    }
+                var new_d = d.Name.split(' ')
+                //console.log(new_d)
+                var newName = e[2] + ' ' + e[3]
+                var newName1 = e[2]
+                var newPro = new_d[0] + ' ' + new_d[2]
+                //console.log(e[2] + ' ' + e[3])
+                if (d.Name.toLowerCase().includes(newName.toLowerCase()) || d.Name.toLowerCase().includes(newName1.toLowerCase())) {
+                    console.log(d.Unit * 1000, '-', d.Name)
+                    ingr_cost.add(d)
+                    ingr_cost.forEach(item => {
+                        if (item.Name == 'Caster Sugar' && item.Unit != 25.000) {
+                            ingr_cost.delete(item)
+                        }
+                    })
 
-                })
+                    // need to get the right amount 
+                    // create the math function
+                    // calculate the cost per recipe
+                }
+
+
 
             })
 
 
 
             //console.log(e, '-', idx)
-            //console.log(recNew)
+            //console.log(ingr_cost)
             console.log(arrStr1)
 
         })
