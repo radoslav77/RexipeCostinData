@@ -90,7 +90,7 @@
     })
 
     //console.log(t[0])
-
+    let Lower = new Set()
     async function getData(url) {
         const res = await fetch(url)
         const data = await res.json()
@@ -105,10 +105,21 @@
                 var newName = e[2] + ' ' + e[3]
                 var newName1 = e[2]
                 var newPro = new_d[0] + ' ' + new_d[2]
+
                 //console.log(e[2] + ' ' + e[3])
                 if (d.Name.toLowerCase().includes(newName.toLowerCase()) || d.Name.toLowerCase().includes(newName1.toLowerCase())) {
-                    console.log(d.Unit * 1000, '-', d.Name)
+
+                    Lower.add(d)
+                    //console.log(d.Unit * 1000, '-', d.Name)
                     ingr_cost.add(d)
+                    Lower.forEach(item => {
+                        //console.log(item)
+
+                        if (item.Name.toLowerCase().includes(d.Name.toLowerCase()) && item.Price != d.Price) {
+                            Lower.delete(item)
+
+                        }
+                    })
                     ingr_cost.forEach(item => {
                         if (item.Name == 'Caster Sugar' && item.Unit != 25.000) {
                             ingr_cost.delete(item)
@@ -124,7 +135,7 @@
 
             })
 
-
+            console.log(Lower)
 
             //console.log(e, '-', idx)
             //console.log(ingr_cost)
