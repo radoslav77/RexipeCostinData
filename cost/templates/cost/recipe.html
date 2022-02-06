@@ -74,13 +74,16 @@
     var ingr_cost = new Set()
     var ingr_cost1 = new Set()
     var totalCost = new Set()
+    var name_products = []
+    var full_name_product = []
+    var p = []
     let q = []
 
     for (let i = 0; i < recipeEl.length; i++) {
         var LineText = recipeEl[i].innerHTML
         var t = LineText.split(' ')
         arrStr.add(t)
-
+        //name_products.push(t.splice(0, 2))
         recConatiner.push(LineText)
 
 
@@ -89,6 +92,28 @@
         arrStr1.push(Number(item[0]))
     })
 
+    idx = 0
+    counter_1 = 0
+    name_products.forEach((product, idx) => {
+        var full = []
+        counter_1++
+
+        if (counter_1 > idx) {
+            full.pop()
+            //console.log(full)
+            for (let i = 0; i < product.length; i++) {
+
+                full = full + ' ' + product[i]
+                full_name_product.push(full)
+            }
+        }
+
+
+    })
+
+
+
+    console.log(full_name_product)
     //console.log(t[0])
     let Lower = new Set()
     async function getData(url) {
@@ -96,18 +121,25 @@
         const data = await res.json()
         //console.log(data)
         arrStr.forEach((e, idx) => {
-            //console.log(e)
+            //console.log(e.splice(2, 3))
             data.forEach(d => {
                 //console.log(d)
 
                 var new_d = d.Name.split(' ')
                 //console.log(new_d)
                 var newName = e[2] + ' ' + e[3]
-                var newName1 = e[2]
-                var newPro = new_d[0] + ' ' + new_d[2]
+                //console.log(newName)
 
+                var newName1 = e[2]
+                let new_Product = []
+                for (let i = 0; i < new_d.length; i++) {
+                    new_Product = new_Product + ' ' + new_d[i]
+
+                }
+                var newPro = new_d[0] + ' ' + new_d[2] + new_d[3]
+                //console.log(newPro)
                 //console.log(e[2] + ' ' + e[3])
-                if (d.Name.toLowerCase().includes(newName.toLowerCase()) || d.Name.toLowerCase().includes(newName1.toLowerCase())) {
+                if (new_Product.toLowerCase().includes(newName.toLowerCase())) {
 
                     Lower.add(d)
                     //console.log(d.Unit * 1000, '-', d.Name)
@@ -115,7 +147,7 @@
                     Lower.forEach(item => {
                         //console.log(item)
 
-                        if (item.Name.toLowerCase().includes(d.Name.toLowerCase()) && item.Price != d.Price) {
+                        if (item.Name.toLowerCase().includes(new_Product.toLowerCase()) && item.Price != d.Price) {
                             Lower.delete(item)
 
                         }
@@ -131,17 +163,18 @@
                     // calculate the cost per recipe
                 }
 
-
+                //console.log(Lower)
 
             })
 
-            console.log(Lower)
+
 
             //console.log(e, '-', idx)
             //console.log(ingr_cost)
-            console.log(arrStr1)
+
 
         })
+        console.log(arrStr1)
         let counter = 0
         ingr_cost.forEach(ing => {
 
