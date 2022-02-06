@@ -130,15 +130,16 @@ def recipe(request):
             i = j[0][0]
             ingr.append(i[0:-1])
     data = Import_Data.objects.all()
-    e = []
+    a = []
     for i in ingr:
-
+        print(i)
         for d in data:
+
             if d.name in i:
-                a = []
+
                 a.append(i)
 
-                # print(a)
+    print(a)
 
     # print(data)
     print(ingr[0])

@@ -113,7 +113,7 @@
 
 
 
-    console.log(full_name_product)
+    //console.log(full_name_product)
     //console.log(t[0])
     let Lower = new Set()
     async function getData(url) {
@@ -123,7 +123,7 @@
         arrStr.forEach((e, idx) => {
             //console.log(e.splice(2, 3))
             data.forEach(d => {
-                //console.log(d)
+                //console.log(d.Name)
 
                 var new_d = d.Name.split(' ')
                 //console.log(new_d)
@@ -134,34 +134,51 @@
                 let new_Product = []
                 for (let i = 0; i < new_d.length; i++) {
                     new_Product = new_Product + ' ' + new_d[i]
-
+                    if (new_Product === ':') {
+                        new_Product.splice(i, 1)
+                    }
                 }
                 var newPro = new_d[0] + ' ' + new_d[2] + new_d[3]
+
+                for (let i = 0; i < new_d.length; i++) {
+                    if (new_d[i] == ':') {
+                        new_d.splice(i, 1)
+                    }
+                }
+
+                //console.log(new_Product)
+
+                if (new_Product.toLowerCase().includes(newName.toLowerCase())) {
+                    console.log(123)
+                    Lower.add(d)
+                }
+                console.log(Lower)
+
                 //console.log(newPro)
                 //console.log(e[2] + ' ' + e[3])
-                if (new_Product.toLowerCase().includes(newName.toLowerCase())) {
-
-                    Lower.add(d)
-                    //console.log(d.Unit * 1000, '-', d.Name)
-                    ingr_cost.add(d)
-                    Lower.forEach(item => {
-                        //console.log(item)
-
-                        if (item.Name.toLowerCase().includes(new_Product.toLowerCase()) && item.Price != d.Price) {
-                            Lower.delete(item)
-
-                        }
-                    })
-                    ingr_cost.forEach(item => {
-                        if (item.Name == 'Caster Sugar' && item.Unit != 25.000) {
-                            ingr_cost.delete(item)
-                        }
-                    })
-
-                    // need to get the right amount 
-                    // create the math function
-                    // calculate the cost per recipe
-                }
+                /* if (d.Name.toLowerCase().includes(newName.toLowerCase())) {
+ 
+                     Lower.add(d)
+                     //console.log(d.Unit * 1000, '-', d.Name)
+                     ingr_cost.add(d)
+                     Lower.forEach(item => {
+                         //console.log(item)
+ 
+                         if (item.Name.toLowerCase().includes(new_Product.toLowerCase()) && item.Price != d.Price) {
+                             Lower.delete(item)
+ 
+                         }
+                     })
+                     ingr_cost.forEach(item => {
+                         if (item.Name == 'Caster Sugar' && item.Unit != 25.000) {
+                             ingr_cost.delete(item)
+                         }
+                     })
+ 
+                     // need to get the right amount 
+                     // create the math function
+                     // calculate the cost per recipe
+                 }*/
 
                 //console.log(Lower)
 
@@ -224,8 +241,8 @@
 
         })
         //console.log(q.reduce((a, b) => a + b))
-        priceElement.innerHTML = `£  ${q.reduce((a, b) => a + b)} per recipe`
-        portionElement.innerHTML = `£  ${q.reduce((a, b) => a + b) / 10}  per portion`
+        // priceElement.innerHTML = `£  ${q.reduce((a, b) => a + b)} per recipe`
+        // portionElement.innerHTML = `£  ${q.reduce((a, b) => a + b) / 10}  per portion`
     }
 
 
