@@ -151,25 +151,37 @@
                 if (new_Product.toLowerCase().includes(newName.toLowerCase())) {
                     //console.log(123)
                     Lower.add(d)
+
                     if (newName.toLowerCase == 'undefined') {
                         Lower.delete(d)
                     }
                 }
 
 
+                let Temp = []
+                Lower.forEach(item => {
+
+                    Temp.push(item)
+                    Temp.forEach(e => {
+                        if (item.Price > e.Price) {
+                            Lower.delete(d)
+                        }
+                    })
+
+                })
                 //console.log(newPro)
                 //console.log(e[2] + ' ' + e[3])
                 /* if (d.Name.toLowerCase().includes(newName.toLowerCase())) {
- 
+     
                      Lower.add(d)
                      //console.log(d.Unit * 1000, '-', d.Name)
                      ingr_cost.add(d)
                      Lower.forEach(item => {
                          //console.log(item)
- 
+     
                          if (item.Name.toLowerCase().includes(new_Product.toLowerCase()) && item.Price != d.Price) {
                              Lower.delete(item)
- 
+     
                          }
                      })
                      ingr_cost.forEach(item => {
@@ -177,7 +189,7 @@
                              ingr_cost.delete(item)
                          }
                      })
- 
+     
                      // need to get the right amount 
                      // create the math function
                      // calculate the cost per recipe
@@ -187,7 +199,7 @@
 
             })
 
-            console.log(Lower)
+            //console.log(Lower)
 
             //console.log(e, '-', idx)
             //console.log(ingr_cost)
@@ -249,8 +261,7 @@
     }
 
 
-
-    console.log(q)
+    //console.log(q)
     let temp = 0
     let total = 0
     totalCost.forEach(p => {
