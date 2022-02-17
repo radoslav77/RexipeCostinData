@@ -155,20 +155,23 @@
                     if (newName.toLowerCase == 'undefined') {
                         Lower.delete(d)
                     }
-                }
-
-
-                let Temp = []
-                Lower.forEach(item => {
-
-                    Temp.push(item)
-                    Temp.forEach(e => {
-                        if (item.Price > e.Price) {
+                    Lower.forEach(item => {
+                        //console.log(item.Name, '-', newName)
+                        if (item.Name.toLowerCase() != newName.toLowerCase()) {
+                            console.log(123)
                             Lower.delete(d)
+
                         }
                     })
 
-                })
+
+
+
+                }
+                console.log(Lower)
+
+
+
                 //console.log(newPro)
                 //console.log(e[2] + ' ' + e[3])
                 /* if (d.Name.toLowerCase().includes(newName.toLowerCase())) {
